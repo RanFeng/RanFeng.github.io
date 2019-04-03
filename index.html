@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>距离见面还有：...</title>
+
+
+	<link rel="stylesheet" type="text/css" href="./default.css">
+
+	<script src="./jquery.min.js"></script>
+	<script src="./jquery.knob.js"></script>
+	<script src="./jquery.throttle.js"></script>
+	<script src="./jquery.classycountdown.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="./jquery.classycountdown.css">
+
+	<style>
+        .audio{
+    /*设置音乐显示位置*/
+    	width:45px;
+    	position:fixed;top:65px;left:94%;
+    	z-index:100;
+    	filter:alpha(opacity=30);
+          -moz-opacity:0.3;
+          -khtml-opacity: 0.3;
+          opacity: 0.3;
+    	}
+		.ClassyCountdownDemo { margin:0 auto 30px auto; max-width:800px; width:calc(100%); padding:30px; display:block }
+		#countdown4 { background:#222 }}
+	</style>
+
+</head>
+<body>
+
+<audio controls autoplay="autoplay" class="audio">
+  <source src="need_you.mp3" type="audio/mp3">
+  <source src="need_you.ogg" type="audio/ogg">
+  <source src="need_you.aac" type="audio/mp4">
+</audio>
+<div id="countdown4" class="ClassyCountdownDemo"></div>
+
+<script type="text/javascript">
+
+
+$(document).ready(function() {
+    //console.log((new Date("2019/04/01 20:10:10")).getTime()/1000);
+    //console.log((new Date("2019/04/01 20:10:11")).getTime()/1000);
+	$('#countdown4').ClassyCountdown({
+		now: (new Date()).getTime()/1000,
+        end: (new Date("2019/04/02 15:35:00")).getTime()/1000,
+		//end: $.now() + 10000,
+		labels: true,
+		style: {
+			element: "",
+			textResponsive: .5,
+			days: {
+				gauge: {
+					thickness: .03,
+					bgColor: "rgba(255,255,255,0.05)",
+					fgColor: "#1abc9c"
+				},
+				textCSS: 'font-family:\'Open Sans\'; font-size:25px; font-weight:300; color:#fff;'
+			},
+			hours: {
+				gauge: {
+					thickness: .03,
+					bgColor: "rgba(255,255,255,0.05)",
+					fgColor: "#2980b9"
+				},
+				textCSS: 'font-family:\'Open Sans\'; font-size:25px; font-weight:300; color:#fff;'
+			},
+			minutes: {
+				gauge: {
+					thickness: .03,
+					bgColor: "rgba(255,255,255,0.05)",
+					fgColor: "#8e44ad"
+				},
+				textCSS: 'font-family:\'Open Sans\'; font-size:25px; font-weight:300; color:#fff;'
+			},
+			seconds: {
+				gauge: {
+					thickness: .03,
+					bgColor: "rgba(255,255,255,0.05)",
+					fgColor: "#f39c12"
+				},
+				textCSS: 'font-family:\'Open Sans\'; font-size:25px; font-weight:300; color:#fff;'
+			}
+
+		},
+        onEndCallback: function() {
+			console.log("Time out!");
+		}
+	});
+});
+</script>
+
+
+
+</body></html>
