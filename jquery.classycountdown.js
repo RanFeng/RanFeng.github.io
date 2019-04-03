@@ -79,7 +79,7 @@
         doTick();
         setInterval(doTick, 1000);
         doResponsive();
-        
+
         function prepare() {
             element.append('<div class="ClassyCountdown-wrapper">' +
                     '<div class="ClassyCountdown-days">' +
@@ -138,10 +138,16 @@
                 element.find(".ClassyCountdown-seconds .ClassyCountdown-value > span").html(settings.labelsOptions.lang.seconds);
                 element.find(".ClassyCountdown-value > span").attr("style", settings.labelsOptions.style);
             }
-            secondsLeft = settings.end - settings.now;
+            if(settings.end > settings.now){
+                secondsLeft = settings.end - settings.now;
+            }else {
+                secondsLeft = settings.now - settings.end;
+            }
+            // secondsLeft = settings.end - settings.now;
+
             secondsToDHMS();
         }
-        
+
         function secondsToDHMS() {
             DaysLeft = Math.floor(secondsLeft / 86400);
             HoursLeft = Math.floor((secondsLeft % 86400) / 3600);
@@ -150,28 +156,37 @@
         }
 
         function doTick() {
-            secondsLeft--;
-            secondsToDHMS();
-            if (secondsLeft <= 0) {
-                if (!isFired) {
-                    isFired = true;
-                    settings.onEndCallback();
-                }
-                DaysLeft = 0;
-                HoursLeft = 0;
-                MinutesLeft = 0;
-                SecondsLeft = 0;
+            if(settings.end > settings.now){
+                secondsLeft--;
+                secondsToDHMS();
+                element.find('.ClassyCountdown-days input').val(365 - DaysLeft).trigger('change');
+                element.find('.ClassyCountdown-hours input').val(24 - HoursLeft).trigger('change');
+                element.find('.ClassyCountdown-minutes input').val(60 - MinutesLeft).trigger('change');
+                element.find('.ClassyCountdown-seconds input').val(60 - SecondsLeft).trigger('change');
+                element.find('.ClassyCountdown-days .ClassyCountdown-value > div').html(DaysLeft);
+                element.find('.ClassyCountdown-hours .ClassyCountdown-value > div').html(HoursLeft);
+                element.find('.ClassyCountdown-minutes .ClassyCountdown-value > div').html(MinutesLeft);
+                element.find('.ClassyCountdown-seconds .ClassyCountdown-value > div').html(SecondsLeft);
+            }else{
+                secondsLeft++;
+                secondsToDHMS();
+                element.find('.ClassyCountdown-days input').val(DaysLeft).trigger('change');
+                element.find('.ClassyCountdown-hours input').val(HoursLeft).trigger('change');
+                element.find('.ClassyCountdown-minutes input').val(MinutesLeft).trigger('change');
+                element.find('.ClassyCountdown-seconds input').val(SecondsLeft).trigger('change');
+                element.find('.ClassyCountdown-days .ClassyCountdown-value > div').html(DaysLeft);
+                element.find('.ClassyCountdown-hours .ClassyCountdown-value > div').html(HoursLeft);
+                element.find('.ClassyCountdown-minutes .ClassyCountdown-value > div').html(MinutesLeft);
+                element.find('.ClassyCountdown-seconds .ClassyCountdown-value > div').html(SecondsLeft);
             }
-            element.find('.ClassyCountdown-days input').val(365 - DaysLeft).trigger('change');
-            element.find('.ClassyCountdown-hours input').val(24 - HoursLeft).trigger('change');
-            element.find('.ClassyCountdown-minutes input').val(60 - MinutesLeft).trigger('change');
-            element.find('.ClassyCountdown-seconds input').val(60 - SecondsLeft).trigger('change');
-            element.find('.ClassyCountdown-days .ClassyCountdown-value > div').html(DaysLeft);
-            element.find('.ClassyCountdown-hours .ClassyCountdown-value > div').html(HoursLeft);
-            element.find('.ClassyCountdown-minutes .ClassyCountdown-value > div').html(MinutesLeft);
-            element.find('.ClassyCountdown-seconds .ClassyCountdown-value > div').html(SecondsLeft);
+
+
+
+
+
+
         }
-        
+
         function doResponsive() {
             element.find('.ClassyCountdown-wrapper > div').each(function() {
                 $(this).css('height', $(this).width() + 'px');
@@ -201,7 +216,7 @@
             element.find('.ClassyCountdown-minutes input').trigger('change');
             element.find('.ClassyCountdown-seconds input').trigger('change');
         }
-        
+
         function getPreset(theme) {
             switch (theme) {
                 case 'flat-colors':
